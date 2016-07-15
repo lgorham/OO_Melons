@@ -1,6 +1,7 @@
 """This file should have our order classes in it."""
 
 from random import randint
+import datetime
 
 
 class AbstractMelonOrder(object):
@@ -12,14 +13,20 @@ class AbstractMelonOrder(object):
         self.species = species
         self.qty = qty
         self.shipped = False
+        self.current_date = datetime.datetime.today().weekday()
+        self.order_hour = datetime.datetime.now().time().hour
+
 
 
     def get_base_price(self):
         """Generates current base price from random int between 5-9"""
 
         random_base = randint(5,9)
-        return random_base
 
+        if self.current_date in range(0, 5) and self.order_hour in range(8, 12):
+            random_base += 4.00
+
+        return random_base
 
     def get_total(self):
         """Calculate price."""
